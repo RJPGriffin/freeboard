@@ -638,13 +638,14 @@ function FreeboardModel(datasourcePlugins, widgetPlugins, freeboardUI)
 
 		var animateLength = (animate) ? 250 : 0;
 		var barHeight = $("#admin-bar").outerHeight();
+		var titleHeight = $("#title-header").outerHeight();
 
 		if(!editing)
 		{
 			$("#toggle-header-icon").addClass("icon-wrench").removeClass("icon-chevron-up");
 			$(".gridster .gs_w").css({cursor: "default"});
-			$("#main-header").animate({"top": "-" + barHeight + "px"}, animateLength);
-			$("#board-content").animate({"top": "20"}, animateLength);
+			$("#main-header").animate({"top": "-" + (barHeight - titleHeight) + "px"}, animateLength);
+			$("#board-content").animate({"top": (titleHeight +20) + "px"}, animateLength);
 			$("#main-header").data().shown = false;
 			$(".sub-section").unbind();
 			freeboardUI.disableGrid();
@@ -653,8 +654,8 @@ function FreeboardModel(datasourcePlugins, widgetPlugins, freeboardUI)
 		{
 			$("#toggle-header-icon").addClass("icon-chevron-up").removeClass("icon-wrench");
 			$(".gridster .gs_w").css({cursor: "pointer"});
-			$("#main-header").animate({"top": "0px"}, animateLength);
-			$("#board-content").animate({"top": (barHeight + 20) + "px"}, animateLength);
+			$("#main-header").animate({"top": titleHeight + "px"}, animateLength);
+			$("#board-content").animate({"top": (barHeight + titleHeight + 20) + "px"}, animateLength);
 			$("#main-header").data().shown = true;
 			freeboardUI.attachWidgetEditIcons($(".sub-section"));
 			freeboardUI.enableGrid();
@@ -674,7 +675,7 @@ function FreeboardUI()
 {
 	var PANE_MARGIN = 10;
 	var PANE_WIDTH = 300;
-	var MIN_COLUMNS = 3;
+	var MIN_COLUMNS = 4;
 	var COLUMN_WIDTH = PANE_MARGIN + PANE_WIDTH + PANE_MARGIN;
 
 	var userColumns = MIN_COLUMNS;
@@ -1725,6 +1726,11 @@ PluginEditor = function(jsEditor, valueEditor)
 					_displayValidationError(settingDef.name, "This is required.");
 					return true;
 				}
+				else if(settingDef.type == "integer" && (newSettings.settings[settingDef.name] % 1 !== 0))
+				{
+					_displayValidationError(settingDef.name, "Must be a whole number.");
+					return true;
+				}
 				else if(settingDef.type == "number" && !_isNumerical(newSettings.settings[settingDef.name]))
 				{
 					_displayValidationError(settingDef.name, "Must be a number.");
@@ -2598,7 +2604,7 @@ var freeboard = (function()
 	var currentStyle = {
 		values: {
 			"font-family": '"HelveticaNeue-UltraLight", "Helvetica Neue Ultra Light", "Helvetica Neue", sans-serif',
-			"color"      : "#d3d4d4",
+			"color"      : "#6d6d6d",
 			"font-weight": 100
 		}
 	};
@@ -2700,7 +2706,7 @@ var freeboard = (function()
 									{
 										name : "col_width",
 										display_name : "Columns",
-										type : "number",
+										type : "integer",
 										default_value : 1,
 										required : true
 									}
@@ -3222,7 +3228,7 @@ $.extend(freeboard, jQuery.eventEmitter);
 
 		this.updateNow = function () {
 			$.ajax({
-				url: "http://api.openweathermap.org/data/2.5/weather?q=" + encodeURIComponent(currentSettings.location) + "&units=" + currentSettings.units,
+				url: "http://api.openweathermap.org/data/2.5/weather?APPID="+currentSettings.api_key+"&q=" + encodeURIComponent(currentSettings.location) + "&units=" + currentSettings.units,
 				dataType: "JSONP",
 				success: function (data) {
 					// Rejigger our data into something easier to understand
@@ -3264,6 +3270,12 @@ $.extend(freeboard, jQuery.eventEmitter);
 		display_name: "Open Weather Map API",
 		settings: [
 			{
+				name: "api_key",
+				display_name: "API Key",
+				type: "text",
+				description: "Your personal API Key from Open Weather Map"
+			},
+            {
 				name: "location",
 				display_name: "Location",
 				type: "text",
@@ -3322,7 +3334,7 @@ $.extend(freeboard, jQuery.eventEmitter);
 		}
 
 		this.onSettingsChanged = function (newSettings) {
-			dweetio.stop_listening();
+			dweetio.stop_listening_for(currentSettings.thing_id);
 
 			currentSettings = newSettings;
 
@@ -3731,7 +3743,7 @@ freeboard.loadDatasourcePlugin({
 
 		freeboard.addStyle('.sparkline-legend', "margin:5px;");
 		freeboard.addStyle('.sparkline-legend-value',
-			'color:white; font:10px arial,san serif; float:left; overflow:hidden; width:50%;');
+			'color:#606060; font:10px arial,san serif; float:left; overflow:hidden; width:50%;');
 		freeboard.addStyle('.sparkline-legend-value span',
 			'font-weight:bold; padding-right:5px;');
 	}
@@ -4424,15 +4436,17 @@ freeboard.loadDatasourcePlugin({
         var indicatorElement = $('<div class="indicator-light"></div>');
         var currentSettings = settings;
         var isOn = false;
+        var onText;
+        var offText;
 
         function updateState() {
             indicatorElement.toggleClass("on", isOn);
 
             if (isOn) {
-                stateElement.text((_.isUndefined(currentSettings.on_text) ? "" : currentSettings.on_text));
+                stateElement.text((_.isUndefined(onText) ? (_.isUndefined(currentSettings.on_text) ? "" : currentSettings.on_text) : onText));
             }
             else {
-                stateElement.text((_.isUndefined(currentSettings.off_text) ? "" : currentSettings.off_text));
+                stateElement.text((_.isUndefined(offText) ? (_.isUndefined(currentSettings.off_text) ? "" : currentSettings.off_text) : offText));
             }
         }
 
@@ -4449,6 +4463,12 @@ freeboard.loadDatasourcePlugin({
         this.onCalculatedValueChanged = function (settingName, newValue) {
             if (settingName == "value") {
                 isOn = Boolean(newValue);
+            }
+            if (settingName == "on_text") {
+                onText = newValue;
+            }
+            if (settingName == "off_text") {
+                offText = newValue;
             }
 
             updateState();
@@ -4468,26 +4488,26 @@ freeboard.loadDatasourcePlugin({
         type_name: "indicator",
         display_name: "Indicator Light",
         settings: [
-            {
-                name: "title",
-                display_name: "Title",
-                type: "text"
-            },
-            {
-                name: "value",
-                display_name: "Value",
-                type: "calculated"
-            },
-            {
-                name: "on_text",
-                display_name: "On Text",
-                type: "calculated"
-            },
-            {
-                name: "off_text",
-                display_name: "Off Text",
-                type: "calculated"
-            }
+	        {
+	            name: "title",
+	            display_name: "Title",
+	            type: "text"
+	        },
+	        {
+	            name: "value",
+	            display_name: "Value",
+	            type: "calculated"
+	        },
+	        {
+	            name: "on_text",
+	            display_name: "On Text",
+	            type: "calculated"
+	        },
+	        {
+	            name: "off_text",
+	            display_name: "Off Text",
+	            type: "calculated"
+	        }
         ],
         newInstance: function (settings, newInstanceCallback) {
             newInstanceCallback(new indicatorWidget(settings));

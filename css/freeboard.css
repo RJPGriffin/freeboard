@@ -49,7 +49,7 @@
 }
 
 .cm-s-ambiance .CodeMirror-gutters {
-  background: #3D3D3D;
+  background: #3c83c3;
   border-right: 1px solid #4D4D4D;
   box-shadow: 0 10px 20px black;
 }
@@ -431,6 +431,13 @@ body {
 	margin: 0;
 }
 
+/* Hacky hack. Remove scrollbars for 320 width screens */
+@media screen and (max-width : 320px) {
+	body::-webkit-scrollbar {
+		display: none;
+	}
+}
+
 /* ==========================================================================
    Links
    ========================================================================== */
@@ -756,14 +763,14 @@ freeboard
 ============*/
 
 html {
-	background-color: #101214;
+	background-color: #1C538A; /*101214*/
 	height: 100%;
 	overflow: hidden;
 }
 
 body {
-	background-color: #101214;
-	color: #8b8b8b;
+	background-color: #8590a0; /*101214*/
+	color: #606060; /*8b8b8b*/
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	line-height: 20px;
@@ -774,7 +781,7 @@ body {
 
 .modal {
 	position: absolute;
-	background-color: #2a2a2a;
+	background-color: #e0e0e0;
 	top: 120px;
 	width: 900px;
 	margin: auto;
@@ -789,19 +796,19 @@ body {
 }
 
 .modal header {
-	background-color: #272727;
+	background-color: #3c83c3;
 	height: 40px;
 	margin: 0;
 	padding: 0 10px 0 10px;
-	color: #8b8b8b;
+	color: #606060;
 	text-transform: uppercase;
 }
 
 .modal footer {
-	background-color: #272727;
+	background-color: #3c83c3;
 	height: 40px;
 	margin: 0;
-	color: #8b8b8b;
+	color: #606060;
 	text-transform: uppercase;
 	clear: both;
 }
@@ -901,7 +908,7 @@ input[type="color"],
 	padding: 4px 6px;
 	font-size: 14px;
 	line-height: 20px;
-	color: #d3d4d4;
+	color: #606060;
 	vertical-align: middle;
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
@@ -939,8 +946,8 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-	background-color: #272727;
-	border: 1px solid #3d3d3d;
+	background-color: #f9f9f9;
+	border: 1px solid #3c83c3;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -966,19 +973,19 @@ input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
 .uneditable-input:focus {
-	border-color: rgba(255, 153, 0, 0.8);
+	border-color: rgba(60, 131, 195, 0.8);
 	outline: 0;
 	outline: thin dotted    \9;
 	/* IE6-9 */
 
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(255, 153, 0);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(255, 153, 0);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(255, 153, 0);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(60, 131, 195);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(60, 131, 195);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(60, 131, 195);
 }
 
 select {
 	width: 220px;
-	background-color: #272727;
+	background-color: #000;
 	height: 27px;
 }
 
@@ -1090,7 +1097,7 @@ a:focus {
 	left: 0px;
 	height: 100%;
 	width: 100%;
-	background: rgba(0, 0, 0, 0.8);
+	background: rgba(200, 200, 200, 0.9);
 	overflow-y: auto;
 }
 
@@ -1110,14 +1117,7 @@ a:focus {
 	text-decoration: underline;
 }
 
-.gridster header {
-	background-color: #272727;
-	height: 30px;
-	margin: 0;
-	padding: 0 10px 0 10px;
-	color: #8b8b8b;
-	text-transform: uppercase;
-}
+
 
 header h1 {
 	font-size: 12px;
@@ -1154,10 +1154,11 @@ header h1 {
 }
 
 #admin-bar {
-	background-color: #313131;
+	background-color: #3473aa;
 	width: 100%;
-	height: 200px;
+	height: 140px;
 	position: relative;
+	z-index: -1;
 	-webkit-box-shadow: 0 0 5px #000;
 	box-shadow: 0 0 5px #000;
 }
@@ -1167,7 +1168,7 @@ header h1 {
 	left: 0;
 	right: 0;
 	width: 50px;
-	background-color: #313131;
+	background-color: #606060;
 	text-align: center;
 	cursor: pointer;
 }
@@ -1227,7 +1228,7 @@ header h1 {
 }
 
 .table td {
-	border-top: solid 1px #3d3d3d;
+	border-top: solid 1px #3c83c3;
 	color: #d3d4d4;
 }
 
@@ -1240,6 +1241,29 @@ header h1 {
 #cam {
 	height: 100%;
 	background-size: cover;
+}
+
+#title-header{
+	background-color: #3c84c3;
+	position: fixed;
+	width: 100%;
+	z-index: 100;
+	-webkit-box-shadow: 0 0 5px #000;
+	box-shadow: 0 0 5px #000;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	height: fit-content;
+}
+
+#board-title{
+	width: 100%;
+	padding-top: 20px;
+	padding-bottom: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	
+	
 }
 
 #admin-menu {
@@ -1266,7 +1290,7 @@ header h1 {
 
 .sub-section {
 	padding: 0;
-	border-bottom: solid 1px #363636;
+	border-bottom: solid 1px #e0e0e0;
 	position: relative;
 	overflow: hidden;
 }
@@ -1302,11 +1326,12 @@ header h1 {
 }
 
 .section-title {
-	min-height: 7px;
+	min-height: 100px;
 }
 
 .small-text {
-	color: #d3d4d4;
+	/*color: #d3d4d4;*/
+	color: #6F6F6F;
 	font-size: 20px;
 	font-weight: 100;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1369,8 +1394,21 @@ ul, ol {
 	top: 0;
 }
 
+/*Panes*/
+
+/*Pane header*/
+.gridster header {
+	background-color: #3c83c3;
+	height: 30px;
+	margin: 0;
+	padding: 0 10px 0 10px;
+	color: #851D1D; /*8b8b8b*/
+	text-transform: uppercase;
+
+}
+
 .gridster .gs_w {
-	background: #2a2a2a;
+	background: #f9f9f9;
 	padding: 0px;
 	margin: 0px;
 	overflow: hidden;
@@ -1381,6 +1419,8 @@ ul, ol {
 	-moz-user-select: text;
 	-ms-user-select: text;
 	user-select: text;
+	-webkit-box-shadow: 0 0 3px #101010;
+	box-shadow: 0 0 3px #101010;
 }
 
 .gridster .preview-holder {
@@ -1423,6 +1463,26 @@ ul, ol {
 .dropdown-submenu:hover > a > [class*=" icon-"],
 .dropdown-submenu:focus > a > [class*=" icon-"] {
 	background-image: url("../img/glyphicons-halflings-white.png");
+}
+
+.icon-grey,
+.nav-pills > .active > a > [class^="icon-"],
+.nav-pills > .active > a > [class*=" icon-"],
+.nav-list > .active > a > [class^="icon-"],
+.nav-list > .active > a > [class*=" icon-"],
+.navbar-inverse .nav > .active > a > [class^="icon-"],
+.navbar-inverse .nav > .active > a > [class*=" icon-"],
+.dropdown-menu > li > a:hover > [class^="icon-"],
+.dropdown-menu > li > a:focus > [class^="icon-"],
+.dropdown-menu > li > a:hover > [class*=" icon-"],
+.dropdown-menu > li > a:focus > [class*=" icon-"],
+.dropdown-menu > .active > a > [class^="icon-"],
+.dropdown-menu > .active > a > [class*=" icon-"],
+.dropdown-submenu:hover > a > [class^="icon-"],
+.dropdown-submenu:focus > a > [class^="icon-"],
+.dropdown-submenu:hover > a > [class*=" icon-"],
+.dropdown-submenu:focus > a > [class*=" icon-"] {
+	background-image: url("../img/glyphicons-halflings.png");
 }
 
 .icon-glass {
@@ -2030,7 +2090,7 @@ input.table-row-value {
 	max-height: 110px;
 	overflow-x: hidden;
 	overflow-y: auto;
-	border-bottom: solid 1px #3d3d3d;
+	border-bottom: solid 1px #3c83c3;
 	width: 414px;
 }
 
@@ -2038,7 +2098,7 @@ input.table-row-value {
 	max-height: 110px;
 	overflow-x: hidden;
 	overflow-y: auto;
-	border-bottom: solid 1px #3d3d3d;
+	border-bottom: solid 1px #3c83c3;
 }
 
 ul.value-dropdown {
@@ -2046,7 +2106,7 @@ ul.value-dropdown {
 	position: absolute;
 	padding: 0px;
 	margin: 0px;
-	background-color: #272727;
+	background-color: #f9f9f9;
 	border: 1px solid rgba(255, 153, 0, 0.8);
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -2113,7 +2173,7 @@ ul.board-toolbar.vertical {
 }
 
 .board-toolbar li {
-	color: #B88F51;
+	color: #f6f6f6;
 	float: left;
 	cursor: pointer;
 	margin: 0px 0px 0px 5px;
@@ -2151,7 +2211,7 @@ ul.board-toolbar.vertical {
 }
 
 .text-button {
-	color: #B88F51;
+	color: #f6f6f6;
 	cursor: pointer;
 	text-transform: uppercase;
 }
@@ -2242,20 +2302,21 @@ ul.datasource-input-suffix {
 	width: 414px;
 	height: 30px;
 	-webkit-appearance: none;
-	border: 1px solid #3d3d3d;
-	background: url(../img/dropdown-arrow.png) no-repeat right #272727;
+	border: 1px solid #3c83c3;
+	background: url(../img/dropdown-arrow-grey.png) no-repeat right #f9f9f9;
 }
 
 .title {
-	font-family: 'Helvetica-Neue', 'Helvetica', 'Arial', sans-serif;
+	/*font-family: 'Helvetica-Neue', 'Helvetica', 'Arial', sans-serif;*/
+	font-family: 'Ubuntu', sans-serif;
 	vertical-align: baseline;
 	-webkit-font-smoothing: antialiased;
 	font-style: normal;
-	color: #d3d4d4;
+	color: #fafafa;
 }
 
 .title.bordered {
-	border: solid 3px #d3d4d4;
+	border: solid 1px #f5f5f5;
 	display: inline-block;
 	padding: 2px 17px 2px 17px;
 	line-height: 39px;
@@ -2263,8 +2324,7 @@ ul.datasource-input-suffix {
 
 h1.title {
 	margin-bottom: 10px;
-	font-size: 23px;
-	letter-spacing: -1px;
+	font-size: 23px;	
 }
 
 h2.title {
@@ -2294,9 +2354,9 @@ h2.title {
 }
 
 @media screen and (max-width : 960px) {
-	#add-pane {
+	/*#add-pane {
 		padding-top: 10px;
-	}
+	}*/
 
 	.text-button {
 		font-size: 14px;
@@ -2304,16 +2364,41 @@ h2.title {
 	}
 
 	h1.title {
-		margin-bottom: 0px;
+		margin-bottom: 0px;		
 		font-size: 13px;
 		letter-spacing: 0px;
+		
 	}
 
+	/*h3.title{
+		padding-top: 0;
+		width: 90%;
+		align-content: center;
+	}*/
+
 	.title.bordered {
-		padding: 1px 8px;
+		padding: 1px 5px;
 		line-height: 25px;
 		border-width: 2px;
 	}
+
+	#title-header{
+		padding-top: 0px;
+		align-content: center;
+		align-items: center;
+		align-self: center;
+		height: 50px;
+	}
+
+	#board-title{
+		
+		padding-top: 0px;
+		padding-bottom: 0px;
+		align-self: centre;
+		align-content: center;
+		margin-left: auto;
+		margin-right: auto;		
+	}		
 
 	#admin-menu {
 		width: 100%;
@@ -2339,9 +2424,7 @@ h2.title {
 		float: left;
 	}
 
-	#board-logo {
-		float: left;
-	}
+	
 
 	.modal header {
 		height: 30px;
@@ -2609,7 +2692,7 @@ input:-moz-placeholder, textarea:-moz-placeholder {
 	display: block;
 	overflow: hidden;
 	cursor: pointer;
-	border: 1px solid #3D3D3D;
+	border: 1px solid #3c83c3;
 	border-radius: 0px;
 }
 
@@ -2637,14 +2720,14 @@ input:-moz-placeholder, textarea:-moz-placeholder {
 
 .onoffswitch-inner .on {
 	padding-left: 6px;
-	background-color: #2a2a2a;
-	color: #8B8B8B;
+	background-color: #f6f6f6;
+	color: #606060;
 }
 
 .onoffswitch-inner .off {
 	padding-right: 6px;
-	background-color: #101214;
-	color: #8B8B8B;
+	background-color: #f6f6f6;
+	color: #606060;
 	text-align: right;
 }
 
@@ -2652,7 +2735,7 @@ input:-moz-placeholder, textarea:-moz-placeholder {
 	width: 21px;
 	margin: 4px;
 	background: #A1A1A1;
-	border: 1px solid #3D3D3D;
+	border: 1px solid #3c83c3;
 	border-radius: 0px;
 	position: absolute;
 	top: 0;
@@ -2670,7 +2753,7 @@ input:-moz-placeholder, textarea:-moz-placeholder {
 
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
 	right: 0px;
-	background-color: #FF9900;
+	background-color: #3c83c3;
 }
 
 .code-window {
@@ -2680,7 +2763,7 @@ input:-moz-placeholder, textarea:-moz-placeholder {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: #2a2a2a;
+	background-color: #f6f6f6;
 }
 
 .code-window-footer {
